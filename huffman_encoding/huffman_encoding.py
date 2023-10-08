@@ -1,6 +1,7 @@
 from binarytree import build, Node
 from colorama import Fore
 from prettytable import PrettyTable
+from util.util import colored_array_print
 
 
 class __TreeNode:
@@ -8,6 +9,7 @@ class __TreeNode:
         self.data = data
         self.freq = freq
         self.left = self.right = None
+        self.code_freq = 0
 
 
 def __generate_tree(data: []):
@@ -27,25 +29,26 @@ def __generate_tree(data: []):
     return data[0]
 
 
-def print_codes(root: __TreeNode, tree_list: [], top: int, tree_root: Node, codes_dict: dict):
+def __print_codes(root: __TreeNode, tree_list: [], top: int, tree_root: Node, codes_dict: dict):
     if root.left is not None:
         tree_list[top] = '0'
 
         tree_root.left = Node(root.left.data + '-' + str(root.left.freq))
-        print_codes(root.left, tree_list, top + 1, tree_root.left, codes_dict)
+        __print_codes(root.left, tree_list, top + 1, tree_root.left, codes_dict)
 
     if root.right is not None:
         tree_list[top] = '1'
         tree_root.right = Node(root.right.data + '-' + str(root.right.freq))
-        print_codes(root.right, tree_list, top + 1, tree_root.right, codes_dict)
+        __print_codes(root.right, tree_list, top + 1, tree_root.right, codes_dict)
 
     if root.left is None and root.right is None:
         value_str = ""
+        root.code_freq = top
         
         for i in range(top):
             value_str += str(tree_list[i])
 
-        codes_dict[root.data] = str(value_str)
+        codes_dict[root] = str(value_str)
 
     
 def __HuffmanCodes(data: [], freqs: []):
@@ -62,27 +65,49 @@ def __HuffmanCodes(data: [], freqs: []):
     tree_list = [None] * 100 
 
     print('\nLeft is ', end="")
-    print(Fore.GREEN, '1', end="")
+    print(Fore.GREEN, '0', end="")
     print(Fore.WHITE)
     print("Right is", end="")
     print(Fore.WHITE, end="")
-    print(Fore.RED, '0')
+    print(Fore.RED, '1')
     print(Fore.WHITE)
 
     tree_root = Node(root.data + '-' + str(root.freq))
-    print_codes(root, tree_list, 0, tree_root, codes_dict)
+    __print_codes(root, tree_list, 0, tree_root, codes_dict)
     print(tree_root)
 
     table = PrettyTable()
-    table.field_names = ['8 bit ASCII', 'Huffman Encoded']
+    table.field_names = ['8 bit ASCII', 'Freq (F)', 'Huffman Encoded', 'Code Len', 'Code Frequency']
+    code_count_total = 0
+    freq_total = 0
 
     for key, value in codes_dict.items():
-        table.add_row([key, value])
+        code_count = key.freq * key.code_freq
+        code_count_total += code_count
+        freq_total += key.freq
+        table.add_row([key.data, key.freq, value, key.code_freq, code_count])
 
     print(table)
 
+    print(f'\nASCII total: {freq_total * 8}')
+    print(f'Total Freq * code freq: {code_count_total}')
+    print(f'Memory saved: {(freq_total * 8) - code_count_total}\n')
 
-def extract_freq(data: str):
+    colored_array_print("Converted message: ", Fore.YELLOW, False)
+
+    for element in data:
+        current_instance = None
+
+        for instance in sorted_data:
+            if instance.data == element:
+                current_instance = instance
+
+        print(codes_dict[current_instance], end="")
+    
+    print()
+
+
+def __extract_freq(data: str):
     data_freq_dict = dict()
     freqs = []
     cleaned_data = []
@@ -104,7 +129,6 @@ def extract_freq(data: str):
 
 
 def run():
-    # data = "Negros Oriental State University Main Campus Dumaguete City"
     data = input("Enter word or phrase here: ")
-    cleaned_data, freqs = extract_freq(data.lower())
+    cleaned_data, freqs = __extract_freq(data.lower())
     __HuffmanCodes(cleaned_data, freqs)

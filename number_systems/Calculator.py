@@ -109,7 +109,7 @@ class Calculator:
         self.operation = operation
         self.prev_value = self.input
         self.input = "0"
-        self.result_label.config(text=self.prev_value)
+        self.result_label.config(text=self.prev_value + " " + self.operation)
         self.display_label.config(text=self.input)
 
 

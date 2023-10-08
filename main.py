@@ -22,11 +22,10 @@ def main():
             if choice in range(5):
                 getting_input = False
 
-        if choice == 0:
-            break
-
-
         match choice:
+            case 0:
+                break
+
             case 1:
                 number_systems_calc = Calculator()
                 number_systems_calc.run()
