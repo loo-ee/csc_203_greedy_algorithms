@@ -2,6 +2,7 @@ from colorama import Fore
 from util.util import custom_print, colored_array_print
 from number_systems.Calculator import Calculator
 from knapsack import knapsack
+from egyptian_fractions import egyptian_fractions
 from huffman_encoding import huffman_encoding
 
 
@@ -34,7 +35,7 @@ def main():
                 knapsack.run()
 
             case 3:
-                print('Create Egyptian Fractions')
+                egyptian_fractions.run()
 
             case 4:
                 huffman_encoding.run()
