@@ -4,6 +4,7 @@ from number_systems.Calculator import Calculator
 from knapsack import knapsack
 from egyptian_fractions import egyptian_fractions
 from huffman_encoding import huffman_encoding
+from job_selection import job_selection
 
 
 def main():
@@ -20,7 +21,7 @@ def main():
                 print("Enter a valid input...")
                 continue
 
-            if choice in range(5):
+            if choice in range(7):
                 getting_input = False
 
         match choice:
@@ -39,7 +40,12 @@ def main():
 
             case 4:
                 huffman_encoding.run()
-                
+            
+            case 5:
+                print("Create Activity Selection")
+
+            case 6:
+                job_selection.run()
 
 
 def print_menu():
@@ -53,6 +59,8 @@ def print_menu():
     [2] Knapsack Algorithm
     [3] Egyptian Fractions
     [4] Huffman Encoding
+    [5] Activity Selection
+    [6] Job Selection
     ''')
 
 
