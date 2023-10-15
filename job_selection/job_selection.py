@@ -28,12 +28,12 @@ def __job_selection(jobs: [__Job], job_table: PrettyTable):
             if job_slots[insert_index] is None:
                 job_slots[insert_index] = job
                 inserted = True
-                job_table.add_row([job.name, '[ ' + str(insert_index) + ', ' + str(insert_index + 1) + ' ]', 'Accepted', '+' + str(job.profit)])
+                job_table.add_row([job.name, '[ ' + str(insert_index) + ', ' + str(insert_index + 1) + ' ]', 'Accepted', '+' + str(job.profit), str(job.deadline)])
             else:
                 insert_index -= 1
             
         if insert_index < 0:
-            job_table.add_row([job.name, 'None', 'Not Accepted', '+' + str(0)])
+            job_table.add_row([job.name, 'None', 'Not Accepted', '+' + str(0), str(job.deadline)])
 
 
     return job_slots
@@ -41,7 +41,7 @@ def __job_selection(jobs: [__Job], job_table: PrettyTable):
 
 def run():
     job_result_table = PrettyTable()
-    job_result_table.field_names = ['Job Consider', 'Slot Assign', 'Approval Status', 'Profit']
+    job_result_table.field_names = ['Job Consider', 'Slot Assign', 'Approval Status', 'Profit', 'Deadline']
 
     jobs = [
         __Job('J1', 20, 3),

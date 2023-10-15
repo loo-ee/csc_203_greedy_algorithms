@@ -4,6 +4,7 @@ from number_systems.Calculator import Calculator
 from knapsack import knapsack
 from egyptian_fractions import egyptian_fractions
 from huffman_encoding import huffman_encoding
+from activity_selection import activity_selection
 from job_selection import job_selection
 
 
@@ -42,7 +43,7 @@ def main():
                 huffman_encoding.run()
             
             case 5:
-                print("Create Activity Selection")
+                activity_selection.run()
 
             case 6:
                 job_selection.run()

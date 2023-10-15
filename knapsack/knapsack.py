@@ -48,16 +48,27 @@ def __knapsack_algorithm(items: [__Item], max_weight: int):
 
 
 def run():
-    item1 = __Item('Ballpens', 10, 2)
-    item2 = __Item('Pencils', 5, 3)
-    item3 = __Item('Notebooks', 15, 5)
-    item4 = __Item('Stickers', 7, 7)
-    item5 = __Item('Index Cards', 6, 1)
-    item6 = __Item('Correction Tape', 18, 4)
-    item7 = __Item('Erasers', 3, 1)
+    # item1 = __Item('Ballpens', 10, 2)
+    # item2 = __Item('Pencils', 5, 3)
+    # item3 = __Item('Notebooks', 15, 5)
+    # item4 = __Item('Stickers', 7, 7)
+    # item5 = __Item('Index Cards', 6, 1)
+    # item6 = __Item('Correction Tape', 18, 4)
+    # item7 = __Item('Erasers', 3, 1)
  
-    items_array = [item1, item2, item3, item4, item5, item6, item7]
-    items_count, items_values = __knapsack_algorithm(items_array, 15)
+    # items_array = [item1, item2, item3, item4, item5, item6, item7]
+    items_array = [
+        __Item('1', 10, 10),
+        __Item('2', 20, 5),
+        __Item('3', 15, 3),
+        __Item('4', 35, 1),
+        __Item('5', 5, 2),
+        __Item('6', 10, 4),
+        __Item('7', 25, 6),
+        __Item('8', 15, 5),
+
+    ]
+    items_count, items_values = __knapsack_algorithm(items_array, 18)
 
     computation_table = PrettyTable()
     computation_table.field_names = ['Name', 'Profit', 'Weight', 'P/W', 'Adjusted Weight']
