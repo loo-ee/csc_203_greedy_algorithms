@@ -44,13 +44,13 @@ def run():
     job_result_table.field_names = ['Job Consider', 'Slot Assign', 'Approval Status', 'Profit', 'Deadline']
 
     jobs = [
-        __Job('J1', 20, 3),
-        __Job('J2', 15, 4),
+        __Job('J1', 35, 3),
+        __Job('J2', 30, 4),
         __Job('J3', 25, 4),
-        __Job('J4', 10, 1),
+        __Job('J4', 20, 2),
         __Job('J5', 15, 3),
         __Job('J6', 12, 1),
-        __Job('J7', 30, 2)
+        __Job('J7', 5, 2)
     ]
 
     accepted_jobs = __job_selection(jobs[:], job_result_table)

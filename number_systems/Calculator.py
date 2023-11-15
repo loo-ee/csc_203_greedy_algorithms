@@ -83,17 +83,19 @@ class Calculator:
                 counter = 0
 
 
+        floating_pt_btn = tk.Button(self.button_frame, text=".", font=('Arial', 18), width="10", command=lambda: self.__number_click("."))
         add_btn = tk.Button(self.button_frame, text="+", font=('Arial', 18), width="10", command=lambda: self.__change_operation("+"))
         subtract_btn = tk.Button(self.button_frame, text="-", font=('Arial', 18), width="10", command=lambda: self.__change_operation("-"))
         multiply_btn = tk.Button(self.button_frame, text="*", font=('Arial', 18), width="10", command=lambda: self.__change_operation("*"))
         divide_btn = tk.Button(self.button_frame, text="/", font=('Arial', 18), width="10", command=lambda: self.__change_operation("/"))
         equal_btn = tk.Button(self.button_frame, text="=", font=('Arial', 18), width="10", command=self.__get_result)
 
-        add_btn.grid(row=7, column=1, sticky="we")
-        subtract_btn.grid(row=7, column=2, sticky="we")
-        multiply_btn.grid(row=8, column=0, sticky="we")
-        divide_btn.grid(row=8, column=1, sticky="we")
-        equal_btn.grid(row=8, column=2, sticky="we")
+        floating_pt_btn.grid(row=7, column=1, sticky="we")
+        add_btn.grid(row=7, column=2, sticky="we")
+        subtract_btn.grid(row=8, column=0, sticky="we")
+        multiply_btn.grid(row=8, column=1, sticky="we")
+        divide_btn.grid(row=8, column=2, sticky="we")
+        equal_btn.grid(row=9, column=0, sticky="we")
 
         self.mode_label.config(text="Mode: Dec")
         self.number_system_mode = 10
@@ -115,10 +117,16 @@ class Calculator:
 
     def __get_result(self) -> None:
         if self.operation is not None and self.prev_value is not None and self.input is not None:
-            prev_value = int(self.prev_value, self.number_system_mode)
-            current_value = int(self.input, self.number_system_mode)
+            temp_number_system_mode = self.number_system_mode
+            self.number_system_mode = 10
+
+            prev_value = self.__calculate_conversion(temp_number_system_mode, self.prev_value)
+            current_value = self.__calculate_conversion(temp_number_system_mode, self.input)
             final_result = None
             result = None
+
+            prev_value = float(prev_value)
+            current_value = float(current_value)
 
             if self.operation == "+":
                 result = prev_value + current_value
@@ -129,7 +137,8 @@ class Calculator:
             else:
                 result = prev_value / current_value
             
-            result = int(result)
+            result = float(result)
+            self.number_system_mode = temp_number_system_mode
             final_result = self.__calculate_conversion(10, str(result))
 
             self.input = str(final_result)
@@ -173,16 +182,16 @@ class Calculator:
             value = self.input
 
         if prev_number_system == 2:
-            temp_conv = to_decimal.binary_to_decimal(int(value))
+            temp_conv = to_decimal.binary_to_decimal(value)
         elif prev_number_system == 8:
-            temp_conv = to_decimal.octal_to_decimal(int(value))
+            temp_conv = to_decimal.octal_to_decimal(value)
         elif prev_number_system == 10:
-            temp_conv = int(value)
+            temp_conv = value
         else:
             temp_conv = to_decimal.hexadecimal_to_decimal(value)
         
         if self.number_system_mode == 2:
-            final_conv = from_decimal.decimal_to_binary(temp_conv)
+            final_conv = from_decimal.decimal_to_binary(str(temp_conv))
         elif self.number_system_mode == 8:
             final_conv = from_decimal.decimal_to_octal(temp_conv)
         elif self.number_system_mode == 10:
@@ -196,6 +205,9 @@ class Calculator:
     def __number_click(self, number: chr) -> None:
         if self.input == '0':
             self.input = number
+        elif number == '.':
+            if '.' not in self.input:
+                self.input += number
         else:
             self.input += number
 

@@ -90,7 +90,7 @@ def __HuffmanCodes(data: [], freqs: []):
     print(table)
 
     print(f'\nASCII total: {freq_total * 8}')
-    print(f'Total Freq * code freq: {code_count_total}')
+    print(f'Total code freq: {code_count_total}')
     print(f'Memory saved: {(freq_total * 8) - code_count_total}\n')
 
     colored_array_print("Converted message: ", Fore.YELLOW, False)
